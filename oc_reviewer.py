@@ -5,6 +5,8 @@ from PIL import Image, ImageTk
 import os
 import glob
 import pandas as pd
+import sys
+
 
 class PDFReviewerApp:
     def __init__(self, root):
@@ -21,7 +23,13 @@ class PDFReviewerApp:
         self.session_number = 1
         self.show_cluster_name = tk.BooleanVar(value=True)
         self.df = pd.DataFrame()
-        self.folder_path = "./Iterative_Plots_Compiled"  # Hardcoded path to the folder containing PDF files
+        try:
+            # PyInstaller creates a temp folder and stores path in _MEIPASS
+            base_path = sys._MEIPASS
+        except AttributeError:
+            base_path = os.path.abspath(".")
+
+        self.folder_path = os.path.join(base_path,"./Iterative_Plots_Compiled")
         
         # Create widgets
         self.create_widgets()
