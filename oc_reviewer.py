@@ -3,7 +3,6 @@ from tkinter import ttk, filedialog, messagebox, simpledialog
 import fitz  # PyMuPDF
 from PIL import Image, ImageTk
 import os
-import csv
 import glob
 import pandas as pd
 
