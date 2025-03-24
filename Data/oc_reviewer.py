@@ -29,7 +29,7 @@ class PDFReviewerApp:
         except AttributeError:
             base_path = os.path.abspath(".")
 
-        self.folder_path = os.path.join(base_path,"./Iterative_Plots_Compiled")
+        self.folder_path = os.path.join(base_path,"Data/Iterative_Plots_Compiled")
         
         # Create widgets
         self.create_widgets()
@@ -60,7 +60,7 @@ class PDFReviewerApp:
             self.load_folder(self.folder_path)  # Load the hardcoded folder path
     
     def get_next_session_number(self):
-        session_files = glob.glob('../' + f"{self.user_name}_oc_review_*.csv")
+        session_files = glob.glob(f"{self.user_name}_oc_review_*.csv")
         if session_files:
             session_numbers = [int(f.split("_oc_review_")[1].split(".")[0]) for f in session_files]
             return max(session_numbers) + 1
@@ -161,14 +161,14 @@ class PDFReviewerApp:
             self.current_file_index = 0
             self.load_reviews()  # Ensure reviews are loaded after loading the folder
             self.current_file_index = self.find_first_unreviewed_file()
-            print(f"First unreviewed file: {self.pdf_files[self.current_file_index]}")  # For demonstration purposes
+            # print(f"First unreviewed file: {self.pdf_files[self.current_file_index]}")  # For demonstration purposes
             self.load_pdf(self.pdf_files[self.current_file_index])
         else:
             messagebox.showerror("Error", "No PDF files found in the selected folder.")
     
     def load_reviews(self, csv_file=None):
         if csv_file is None:
-            csv_file = '../' + f"{self.user_name}_oc_review_{self.session_number}.csv"
+            csv_file = f"{self.user_name}_oc_review_{self.session_number}.csv"
         if os.path.isfile(csv_file):
             self.df = pd.read_csv(csv_file)
             self.review_data = self.df.set_index('File').T.to_dict()
@@ -261,7 +261,9 @@ class PDFReviewerApp:
         # Save to CSV file
         csv_file = f"{self.user_name}_oc_review_{self.session_number}.csv"
         self.df['Name'] = self.df['File'].apply(lambda x: x.split("_cmd_lit_prior_final.pdf")[0])
-        self.df.to_csv('../' + csv_file, index=False)
+        # Comment column should be string type
+        self.df['Comment'] = self.df['Comment'].astype(str)
+        self.df.to_csv(csv_file, index=False)
         
         # print(f"Review saved for {file_name}")  # For demonstration purposes
     
