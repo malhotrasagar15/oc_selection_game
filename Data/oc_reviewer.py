@@ -60,7 +60,7 @@ class PDFReviewerApp:
             self.load_folder(self.folder_path)  # Load the hardcoded folder path
     
     def get_next_session_number(self):
-        session_files = glob.glob(f"{self.user_name}_oc_review_*.csv")
+        session_files = glob.glob('../' + f"{self.user_name}_oc_review_*.csv")
         if session_files:
             session_numbers = [int(f.split("_oc_review_")[1].split(".")[0]) for f in session_files]
             return max(session_numbers) + 1
@@ -168,7 +168,7 @@ class PDFReviewerApp:
     
     def load_reviews(self, csv_file=None):
         if csv_file is None:
-            csv_file = f"{self.user_name}_oc_review_{self.session_number}.csv"
+            csv_file = '../' + f"{self.user_name}_oc_review_{self.session_number}.csv"
         if os.path.isfile(csv_file):
             self.df = pd.read_csv(csv_file)
             self.review_data = self.df.set_index('File').T.to_dict()
@@ -261,7 +261,7 @@ class PDFReviewerApp:
         # Save to CSV file
         csv_file = f"{self.user_name}_oc_review_{self.session_number}.csv"
         self.df['Name'] = self.df['File'].apply(lambda x: x.split("_cmd_lit_prior_final.pdf")[0])
-        self.df.to_csv(csv_file, index=False)
+        self.df.to_csv('../' + csv_file, index=False)
         
         # print(f"Review saved for {file_name}")  # For demonstration purposes
     
