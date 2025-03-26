@@ -1,0 +1,51 @@
+!!! DISCLAIMER!!!
+
+This application will install the following python libraries:
+
+pandas
+pillow
+PyQt5
+PyMuPDF
+
+
+# How to run the application
+
+1. Download the folder from Google Drive 
+2. Open a terminal.
+3. Navigate to the directory where the script run_oc_reviewer.sh is located using the cd command:
+
+cd /path/to/script
+
+4. Run the script by typing:
+
+./run_oc_reviewer.sh
+
+
+# How to use the application
+
+1. Running the app for the first time
+
+    a) Please choose the option "No" when asked about resuming a previous sesssion
+    b) Enter your name and click "ok". This will be used to collate all the results (assignments) from a single user. Default: "user_1"
+    c) A window appears showing the plot on the left with buttons for user input on the right. 
+        Note: The first plot will not have the optimal scaling for the display however, this gets corrected after the user clicks "Next".
+    d) Please assign one quality label to the fit to the observed CMD of the cluster and provide comments (optional) in the comment box 
+    e) Click "Next" or "Previous" to navigate through the plots.
+    f) Click "Close Session" if necessary. The assignments are saved after each review in a file named {user_name}_oc_review_{session_number}.csv
+
+2. Resuming a Session
+
+    a) To resume a previous session, click "Yes" when asked about resuming a session.
+    b) A window appears prompting the user to select the file corresponding to the session they would like to resume. To reiterate, each session's
+        results are saved as {user_name}_oc_review_{session_number}.csv
+    c) The session picks up from where the user left. In case all clusters have a quality label assigned, the app starts from the first cluster
+
+3. Users can choose to display the name of the cluster by checking the checkbox "Show Cluster Name"
+
+
+# Meaning of the Quality Labels:
+
+Very good: Isochrone fit (cluster parameters) good enough for mass-ratios of individual cluster members
+Good: Isochrone fit (cluster parameters) good but NOT for mass-ratios
+Acceptable: Some cluster parameters seem a bit off but the overall isochrone fit is acceptable
+Poor: Poor Isochrone Fit
